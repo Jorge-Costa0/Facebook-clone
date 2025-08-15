@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rede Social</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .post { border-bottom: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Bem-vindo, {{ current_user.username }}!</h1>
+    <a href="{{ url_for('logout') }}">Sair</a>
+    <h2>Criar Post</h2>
+    <form method="POST" action="{{ url_for('create_post') }}">
+        <textarea name="content" rows="4" cols="50" required></textarea><br>
+        <button type="submit">Postar</button>
+    </form>
+    <h2>Feed</h2>
+    {% for post in posts %}
+        <div class="post">
+            <p><strong>{{ post.user.username }}</strong> - {{ post.created_at }}</p>
+            <p>{{ post.content }}</p>
+        </div>
+    {% endfor %}
+    {% for message in get_flashed_messages() %}
+        <p style="color: green;">{{ message }}</p>
+    {% endfor %}
+</body>
+</html>
